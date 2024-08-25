@@ -8,20 +8,24 @@ datasource db {
 }
 
 model User {
-  id            Int              @id @default(autoincrement())
-  firstname     String
-  lastname      String
-  email         String
-  height        String?
-  weight        String?
-  userType      USEROLE
-  gender        GENDER
-  contact       String
-  birthdate     DateTime
-  createdAt     DateTime         @default(now())
-  updatedAt     DateTime         @updatedAt
+  id                   String             @id @default(cuid())
+  clerkUserId          String
+  firstname            String
+  lastname             String
+  email                String             @unique
+  contactNumber        String?
+  address              String?
+  profileImage         String?
+  height               String?
+  weight               String?
+  userType             USEROLE?
+  gender               GENDER?
+  contact              String?
+  birthdate            DateTime?
+  createdAt            DateTime         @default(now())
+  updatedAt            DateTime         @updatedAt
 
-  patientHistory PatientHistory[] @relation("UserPatientHistory")
+  patientHistory       PatientHistory[]  @relation("UserPatientHistory")
 
   @@index([firstname])
 }
@@ -40,11 +44,12 @@ enum GENDER {
 
 model PatientHistory {
   id                   String             @id @default(cuid())
-  userId    Int
-  history   String
-  createdAt DateTime @default(now())
+  userId               String
+  history              String
+  createdAt            DateTime           @default(now())
 
-  user      User     @relation("UserPatientHistory", fields: [userId], references: [id])
+  user                 User               @relation("UserPatientHistory", fields: [userId], references: [id])
 
   @@index([userId])
 }
+
