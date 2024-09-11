@@ -1,6 +1,5 @@
 import Link from "next/link";
 import {
-  
   CircleUser,
   Home,
   LineChart,
@@ -49,7 +48,7 @@ const Header = () => {
               className="flex items-center gap-2 text-lg font-semibold"
             >
               <Package2 className="h-6 w-6" />
-              <span className="sr-only">Zilmar  Clinic</span>
+              <span className="sr-only">Zilmar Clinic System</span>
             </Link>
             <Link
               href="#"

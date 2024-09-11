@@ -1,13 +1,10 @@
 import Link from "next/link";
 import {
   Bell,
-
   Home,
   LineChart,
-
   Package,
   Package2,
-  
   ShoppingCart,
   Users,
 } from "lucide-react";
@@ -22,6 +19,7 @@ import {
   CardTitle,
 } from "~/components/ui/card";
 
+
 import React from "react";
 
 const Sidebar = () => {
@@ -31,7 +29,7 @@ const Sidebar = () => {
         <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
           <Link href="/" className="flex items-center gap-2 font-semibold">
             <Package2 className="h-6 w-6" />
-            <span className="">Zilmar Clinic System</span>
+            <span className="">Zilmar Clinic</span>
           </Link>
           <Button variant="outline" size="icon" className="ml-auto h-8 w-8">
             <Bell className="h-4 w-4" />
@@ -45,7 +43,7 @@ const Sidebar = () => {
               className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
             >
               <Home className="h-4 w-4" />
-              Dashboards
+              Dashboard
             </Link>
             <Link
               href="#"

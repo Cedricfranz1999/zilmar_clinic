@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from "react";
 
 import {
   Select,
@@ -7,20 +7,20 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "~/components/ui/select"
+} from "~/components/ui/select";
 
-export function SelectGender() {
+export function SelectGender({ field }: { field: any }) {
   return (
-    <Select>
+    <Select value={field.value} onValueChange={field.onChange}>
       <SelectTrigger className="w-full">
         <SelectValue placeholder="" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectItem value="apple">Male</SelectItem>
-          <SelectItem value="banana">Female</SelectItem>
+          <SelectItem value="MALE">Male</SelectItem>
+          <SelectItem value="FEMALE">Female</SelectItem>
         </SelectGroup>
       </SelectContent>
     </Select>
-  )
+  );
 }

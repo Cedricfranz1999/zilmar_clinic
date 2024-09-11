@@ -1,21 +1,37 @@
-import { BookCheck } from "lucide-react";
-import React from "react";
-import { Card } from "~/components/ui/card";
-import { Label } from "~/components/ui/label";
-import Header from "./_components/LandingPage/Header";
-import Intro from "./_components/LandingPage/Intro";
-import Features from "./_components/LandingPage/Features";
+/* eslint-disable react-hooks/exhaustive-deps */
+"use client";
 
-const page = () => {
+import React, { useEffect } from "react";
+import OnBoarding from "./patient/(_patientComponents)/Onboarding";
+import { useUser } from "@clerk/nextjs";
+import { api } from "~/trpc/react";
+import { useRouter } from "next/navigation";
+
+const Page = () => {
+  const user = useUser();
+  const router = useRouter();
+
+  // const { data: checkoutItems, refetch: refetchCheckout } =
+  //   api.client_checkouts.getAllCheckoutItems.useQuery();
+
+  const { data } = api.patient.getPatientLogin.useQuery(
+    { userId: user?.user?.id ?? "" },
+    { enabled: !!user?.user?.id },
+  );
+
+  useEffect(() => {
+    if (data?.contactNumber && data?.address) {
+      router.push("/patient");
+    }
+  }, [data?.contactNumber, data?.address]);
+
+  console.log("OWWSHIE", data);
+
   return (
-    <>
-      <div className="flex flex-col items-center justify-start pb-10 pt-2">
-        <Header />
-        <Intro />
-        <Features />
-      </div>
-    </>
+    <div className="flex h-screen w-full items-center justify-center p-10">
+      <OnBoarding />
+    </div>
   );
 };
 
-export default page;
+export default Page;
