@@ -6,7 +6,7 @@ const Features = () => {
     <>
       <div className="mt-40 flex w-full flex-col items-center justify-center gap-2">
         <div className="mb-20">
-          <Label className="text-5xl font-bold text-[#DA1B2E]">Klinika </Label>
+          <Label className="text-5xl font-bold text-[#DA1B2E]">Zilmar </Label>
           <Label className="text-5xl font-extralight"> Features</Label>
         </div>
         <div className="flex w-full justify-center gap-20">
@@ -208,24 +208,24 @@ const Features = () => {
             <div className="flex items-center gap-2">
               <Label className="text-4xl font-extralight">About</Label>
               <Label className="text-4xl font-extrabold text-[#DA1B2E]">
-                Klinika
+                Zilmar
               </Label>
             </div>
             <Label className="w-80 text-xs font-light leading-5 text-[#100f0f]">
-              Klinika is an intuitive and easy to use medical clinic management
+              Zilmar is an intuitive and easy to use medical clinic management
               system ideal for healthcare professionals on the move or who are
-              working from different hospitals.. Its equivalent app can be
-              downloaded on any mobile devices so you can access your medical
+              working from different hospitals.. Its equivalent 
+              book on this website now  so you can access your medical
               patient record system anywhere you are.
             </Label>
             <Label className="w-80 text-xs font-light leading-5 text-[#100f0f]">
-              Klinika’s medical clinic management system software and mobile app
+              Zilmar’s medical clinic management system software and mobile app
               enables you to work across boundaries, from different platforms
               and locations.
             </Label>
 
             <Label className="w-80 text-xs font-light leading-5 text-[#100f0f]">
-              Klinika’s innovative system provides healthcare record management
+              Zilmar’s innovative system provides healthcare record management
               solutions to private practices for better diagnosis and treatment.
             </Label>
           </div>
@@ -236,9 +236,9 @@ const Features = () => {
         <div className="flex gap-28">
           <div className="mt-10 flex flex-col gap-6">
             <div className="flex items-center gap-2">
-              <Label className="text-4xl font-extralight">Download</Label>
+              <Label className="text-4xl font-extralight">Book</Label>
               <Label className="text-4xl font-extrabold text-[#DA1B2E]">
-                Klinika
+                Zilmar
               </Label>
               <Label className="text-4xl font-extralight">Now!</Label>
             </div>
@@ -266,12 +266,12 @@ const Features = () => {
           <div className="mt-10 flex flex-col gap-6">
             <div className="flex items-center gap-2">
               <Label className="text-3xl font-semibold text-black">
-                Klinika
+                Zilmar
               </Label>
             </div>
 
             <Label className="w-[450px] text-sm font-light leading-5 text-[#100f0f]">
-              Klinika's medical clinic management system software and mobile app
+              Zilmar's medical clinic management system software and mobile app
               enables you to work across boundaries, from different platforms
               and locations
             </Label>
@@ -306,7 +306,7 @@ const Features = () => {
               <div className="flex items-center gap-1">
                 <Mail size={15} strokeWidth={2} />{" "}
                 <Label className="w-[450px] text-sm font-light leading-5 text-[#100f0f]">
-                  email@klinika.ph
+                  email@Zilmar.ph
                 </Label>
               </div>
             </div>

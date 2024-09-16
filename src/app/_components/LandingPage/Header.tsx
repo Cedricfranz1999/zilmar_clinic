@@ -13,14 +13,15 @@ const Header = () => {
       <div className="flex flex-col gap-1">
         <div className="flex items-center gap-1">
           <img src="logo.png" width={60} className="rounded-full" />
-          <Label className="text-4xl font-bold text-[#D11C3E]">KLINIKA</Label>
+          <Label className="text-4xl font-bold text-[#D11C3E]">ZILMAR</Label>
         </div>
         <Label className="text-xs font-light text-[#107FBC]">
           Powerful medical software within your area
         </Label>
       </div>
       <div className="flex items-center justify-center gap-10">
-        <Label className="cursor-pointer rounded-full bg-[#007FBC] px-4 py-2 font-semibold text-white">
+        <Label className="cursor-pointer rounded-full bg-[#007FBC] px-4 py-2 font-semibold text-white" onClick={() => router.push("/zilmar")}
+>
           HOME
         </Label>
         <Label className="cursor-pointer font-semibold">ABOUT</Label>

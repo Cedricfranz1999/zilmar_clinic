@@ -23,11 +23,13 @@ import { SelectGender } from "~/app/_components/SelectGender";
 import { CalendarComponent } from "~/app/_components/Calendar";
 import { log } from "console";
 import { api } from "~/trpc/react";
+import { useRouter } from "next/navigation";
 
 const OnBoarding = () => {
+  const router = useRouter();
   const updatePatientRecords = api.patient.createPatientAllDetails.useMutation({
     onSuccess: () => {
-      console.log("hello");
+      router.push("/patient");
     },
   });
   const form = useForm({
@@ -43,21 +45,21 @@ const OnBoarding = () => {
   console.log("ERROR", form.formState.errors);
 
   return (
-    <div className="flex h-screen w-full items-start justify-center p-16">
-      <Card className="flex h-[600px] flex-col items-center justify-center gap-10 rounded-sm border-2 border-blue-300 bg-white px-20">
+    <div className="flex h-screen w-full items-start justify-center bg-[#f6f3f3] p-16 backdrop:blur-sm">
+      <Card className="flex h-[800px] flex-col items-center justify-center gap-10 rounded-sm border-2 border-blue-300 bg-white px-20">
         <Label className="w-72 text-3xl font-semibold leading-4 text-[#1C88C6]">
           <span className="text-[#D61F42]"> Zilmar</span> clinic
         </Label>
         <Image alt="image" height={400} width={400} src="/doctorLogo.png" />
       </Card>
-      <Card className="h-[600px] rounded-sm bg-red-400 px-10">
+      <Card className="h-[800px] rounded-sm bg-red-400 px-10">
         <CardHeader>
           <Label className="font-semibold tracking-widest text-white">
             {" "}
             Please Filled up other confirmation to proceed{" "}
           </Label>
         </CardHeader>
-        <CardContent className="flex flex-col gap-4">
+        <CardContent className="flex flex-col gap-2">
           <Form {...form}>
             <FormField
               control={form.control}

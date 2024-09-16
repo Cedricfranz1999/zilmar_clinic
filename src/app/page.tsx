@@ -8,24 +8,21 @@ import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
 
 const Page = () => {
-  const user = useUser();
+  const { user } = useUser();
   const router = useRouter();
 
-  // const { data: checkoutItems, refetch: refetchCheckout } =
-  //   api.client_checkouts.getAllCheckoutItems.useQuery();
-
   const { data } = api.patient.getPatientLogin.useQuery(
-    { userId: user?.user?.id ?? "" },
-    { enabled: !!user?.user?.id },
+    { userId: user?.id ?? "" },
+    { enabled: !!user?.id },
   );
 
   useEffect(() => {
-    if (data?.contactNumber && data?.address) {
+    if (!user) {
+      router.push("/sign-in");
+    } else if (data?.contactNumber && data?.address) {
       router.push("/patient");
     }
-  }, [data?.contactNumber, data?.address]);
-
-  console.log("OWWSHIE", data);
+  }, [data, router, user]);
 
   return (
     <div className="flex h-screen w-full items-center justify-center p-10">

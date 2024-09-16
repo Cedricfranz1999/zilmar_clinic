@@ -30,6 +30,51 @@ model User {
   @@index([firstname])
 }
 
+model Doctor {
+  
+    id         String        @id @default(cuid())
+    firstname   String
+    lastname   String
+    username   String?
+    password   String?
+    description String
+    specialty  String
+    status   Boolean @default(true)
+
+    createdAt            DateTime         @default(now())
+    updatedAt            DateTime         @updatedAt
+    
+}
+
+model Admin {
+  
+    id         String        @id @default(cuid())
+    username   String
+    password   String
+   
+}
+
+
+model WalkIn {
+  
+    id         String        @id @default(cuid())
+    firstname   String
+    lastname   String
+    age       String
+    gender    GENDER?
+    contact   String
+    weight    String?
+    height    String?
+    address  String?
+
+    createdAt            DateTime         @default(now())
+    updatedAt            DateTime         @updatedAt
+
+   
+}
+
+
+
 enum USEROLE {
   DOCTOR
   ADMIN
@@ -41,6 +86,8 @@ enum GENDER {
   FEMALE
   OTHER
 }
+
+
 
 model PatientHistory {
   id                   String             @id @default(cuid())

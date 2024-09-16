@@ -1,22 +1,35 @@
 import { SignUp } from "@clerk/nextjs";
+import Header from "~/app/_components/LandingPage/Header";
 
 const SignInPage = () => {
   return (
-    <main className="flex h-screen flex-col items-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="flex flex-col items-center justify-center gap-4">
-        <div className="container flex flex-col items-center justify-center gap-12 px-4 py-8">
-          <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-            SIGNUP
-          </h1>
-          <SignUp
+
+
+
+  <>
+      <Header/>
+
+    <div  className=" w-full h-screen  items-center justify-center px-10 flex">
+      
+      <div className=" flex items-center justify-center  w-full">
+        <div className=" p-14 bg-red-400 rounded-lg ">
+         <SignUp
             path="/sign-up"
             routing="path"
             signInUrl="/sign-in"
             fallbackRedirectUrl="/sign-in"
           />
+          </div>
+      </div>
+
+      <div className=" flex items-center justify-center  w-full">
+        <div className=" flex items-center justify-center  bg-blue-500  p-10 rounded-lg">
+          <img src="signup.png" width={600} />
         </div>
       </div>
-    </main>
+    </div>
+    </>
+
   );
 };
 

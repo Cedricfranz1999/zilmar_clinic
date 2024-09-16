@@ -7,17 +7,17 @@ const Intro = () => {
       <div className="mt-10 flex flex-col gap-2">
         <Label className="text-4xl font-extrabold text-[#2982ab]">
           {" "}
-          <span className="text-[#DA1B2E]">SIMPLE</span> CLINIC
+          <span className="text-[#DA1B2E]">ZILMAR</span> CLINIC
         </Label>
         <Label className="text-4xl font-extrabold text-[#2982ab]">
           MANAGEMENT SYSTEM
         </Label>
         <Label className="text-4xl font-extrabold text-[#2982ab]">
-          DESIGN FOR DOCTORS
+          DESIGN FOR PATIENT
         </Label>
         <Label className="w-[350px] font-light leading-6 tracking-wider text-[#0c0b0b]">
           Forget about storage filing to keep patient records. Use{" "}
-          <span className="font-bold text-[#DA1B2E]">Klinika</span> the
+          <span className="font-bold text-[#DA1B2E]">zilmar</span> the
           efficient medical clinic management system at your fingertips.
         </Label>
         <div className="mt-5 flex items-center gap-4">

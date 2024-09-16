@@ -57,7 +57,7 @@ export async function POST(req: Request) {
   await db.user.create({
     data: {
       id: id,
-      clerkUserId: id!,
+      clerkUserId: String(id),
       firstname: payload.data.first_name as string,
       lastname: payload.data.last_name as string,
       email: payload.data.email_addresses[0]?.email_address as string,

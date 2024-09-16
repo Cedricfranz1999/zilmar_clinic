@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { number, z } from "zod";
 import { GenderEnum } from "~/app/patient/formSchema";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
@@ -14,6 +14,45 @@ export const patient_router = createTRPCRouter({
       return ctx.db.user.findFirst({
         where: {
           id: input.userId,
+        },
+      });
+    }),
+
+  getUser: publicProcedure
+    .input(
+      z.object({
+        search: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      return ctx.db.user.findMany({
+        where: {
+          AND: [
+            {
+              OR: [
+                { firstname: { contains: input.search, mode: "insensitive" } },
+                { lastname: { contains: input.search, mode: "insensitive" } },
+              ],
+            },
+            {
+              contactNumber: {
+                not: null,
+              },
+            },
+            {
+              address: {
+                not: null,
+              },
+            },
+            {
+              gender: {
+                not: null,
+              },
+            },
+          ],
+        },
+        orderBy: {
+          createdAt: "asc",
         },
       });
     }),
@@ -39,6 +78,25 @@ export const patient_router = createTRPCRouter({
       return await ctx.db.user.update({
         where: {
           id: userId,
+        },
+        data: {
+          ...input,
+        },
+      });
+    }),
+
+  EditPatient: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        height: z.string(),
+        weight: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db.user.update({
+        where: {
+          id: input.id,
         },
         data: {
           ...input,
