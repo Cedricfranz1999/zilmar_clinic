@@ -4,7 +4,10 @@ import { Label } from "~/components/ui/label";
 const Features = () => {
   return (
     <>
-      <div className="mt-40 flex w-full flex-col items-center justify-center gap-2">
+      <div
+        className="mt-40 flex w-full flex-col items-center justify-center gap-2"
+        id="features"
+      >
         <div className="mb-20">
           <Label className="text-5xl font-bold text-[#DA1B2E]">Zilmar </Label>
           <Label className="text-5xl font-extralight"> Features</Label>
@@ -192,7 +195,7 @@ const Features = () => {
             <Label className="text-xl font-bold text-white">
               Prescription Plan
             </Label>
-            <Label className="w-60 text-sm font-light text-white">
+            <Label className="w-60 text-sm font-light text-white" id="about">
               Create, print, and email your medical prescriptions to your
               patients in an instant.
             </Label>
@@ -214,9 +217,9 @@ const Features = () => {
             <Label className="w-80 text-xs font-light leading-5 text-[#100f0f]">
               Zilmar is an intuitive and easy to use medical clinic management
               system ideal for healthcare professionals on the move or who are
-              working from different hospitals.. Its equivalent 
-              book on this website now  so you can access your medical
-              patient record system anywhere you are.
+              working from different hospitals.. Its equivalent book on this
+              website now so you can access your medical patient record system
+              anywhere you are.
             </Label>
             <Label className="w-80 text-xs font-light leading-5 text-[#100f0f]">
               Zilmar’s medical clinic management system software and mobile app
@@ -310,7 +313,7 @@ const Features = () => {
                 </Label>
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2" id="contact">
               <Label className="text-3xl font-semibold text-black">
                 Follow Us
               </Label>

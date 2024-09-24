@@ -7,8 +7,8 @@ import Header from "../_components/LandingPage/Header";
 const page = () => {
   return (
     <>
-      <div className="flex flex-col items-center justify-start pb-10 pt-0">
-        <Header/>
+      <div className="flex flex-col items-center justify-start bg-gradient-to-r from-[#d3ebef] via-[#efebe3] to-[#e9e9f1] pb-10 pt-0">
+        <Header />
         <Intro />
         <Features />
       </div>

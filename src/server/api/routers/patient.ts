@@ -7,13 +7,14 @@ export const patient_router = createTRPCRouter({
   getPatientLogin: publicProcedure
     .input(
       z.object({
-        userId: z.string(),
+        userId: z.string().optional(),
       }),
     )
     .query(async ({ ctx, input }) => {
+      const userId = ctx.auth.userId;
       return ctx.db.user.findFirst({
         where: {
-          id: input.userId,
+          id: userId,
         },
       });
     }),

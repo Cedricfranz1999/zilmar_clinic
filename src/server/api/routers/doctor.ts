@@ -102,4 +102,18 @@ export const doctor_router = createTRPCRouter({
         },
       });
     }),
+
+  getActiveDoctor: publicProcedure
+    // .input(
+    //   z.object({
+    //     userId: z.string(),
+    //   }),
+    // )
+    .query(async ({ ctx, input }) => {
+      return ctx.db.doctor.findMany({
+        where: {
+          status: true,
+        },
+      });
+    }),
 });

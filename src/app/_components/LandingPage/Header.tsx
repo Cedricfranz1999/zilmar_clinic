@@ -1,12 +1,29 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 import { Card } from "~/components/ui/card";
 import { Label } from "~/components/ui/label";
 
 const Header = () => {
   const router = useRouter();
+  const path = usePathname();
+
+  const navItems = [
+    { label: "HOME", path: "/zilmar" },
+    {
+      label: "ABOUT",
+      path: `${path === "zilmar" ? "#about" : "/zilmar#about"} `,
+    },
+    {
+      label: "FEATURES",
+      path: `${path === "zilmar" ? "#features" : "/zilmar#features"} `,
+    },
+    {
+      label: "CONTACT US",
+      path: `${path === "zilmar" ? "#contact" : "/zilmar#contact"} `,
+    },
+  ];
 
   return (
     <Card className="fixed flex w-full justify-center gap-20 shadow-sm drop-shadow-sm">
@@ -20,23 +37,25 @@ const Header = () => {
         </Label>
       </div>
       <div className="flex items-center justify-center gap-10">
-        <Label className="cursor-pointer rounded-full bg-[#007FBC] px-4 py-2 font-semibold text-white" onClick={() => router.push("/zilmar")}
->
-          HOME
-        </Label>
-        <Label className="cursor-pointer font-semibold">ABOUT</Label>
-        <Label className="cursor-pointer font-semibold">FEATURES</Label>
-        <Label className="cursor-pointer font-semibold">CONTACT US</Label>
+        {navItems.map((item) => (
+          <Label
+            key={item.label}
+            className="cursor-pointer rounded-lg px-4 py-2 font-semibold transition-colors duration-200 hover:bg-blue-600 hover:text-white"
+            onClick={() => router.push(item.path)}
+          >
+            {item.label}
+          </Label>
+        ))}
       </div>
       <div className="flex items-center gap-4">
         <button
-          className="rounded-full bg-[#DA1B2E] px-4 py-2 text-xs text-white"
+          className="rounded-full bg-[#DA1B2E] px-4 py-2 text-xs text-white hover:brightness-125"
           onClick={() => router.push("/sign-up")}
         >
           REGISTER
         </button>
         <button
-          className="rounded-full bg-[#007FBC] px-4 py-2 text-xs text-white"
+          className="rounded-full bg-[#007FBC] px-4 py-2 text-xs text-white hover:brightness-125"
           onClick={() => router.push("/sign-in")}
         >
           LOGIN

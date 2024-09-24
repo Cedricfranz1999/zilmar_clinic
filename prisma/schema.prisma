@@ -28,22 +28,66 @@ model User {
   patientHistory       PatientHistory[]  @relation("UserPatientHistory")
 
   @@index([firstname])
+  Appointment          Appointment[]     @relation("PatientAppointments")
 }
 
 model Doctor {
-  
-    id         String        @id @default(cuid())
-    firstname   String
-    lastname   String
-    username   String?
-    password   String?
-    description String
-    specialty  String
-    status   Boolean @default(true)
+  id                   String        @id @default(cuid())
+  firstname            String
+  lastname             String
+  username             String?
+  password             String?
+  description          String
+  specialty            String
+  status               Boolean @default(true)
 
-    createdAt            DateTime         @default(now())
-    updatedAt            DateTime         @updatedAt
-    
+  createdAt            DateTime         @default(now())
+  updatedAt            DateTime         @updatedAt
+
+  Appointment          Appointment[]    @relation("DoctorAppointments")
+}
+
+model Appointment {
+  id                             String    @id @default(cuid())
+  patientId                      String
+  doctorId                       String?
+  appointmentDescription         String?
+  appointmentTime                DateTime
+  status                         AppointmentStatus @default(PENDING)
+  createdAt                      DateTime @default(now())
+  updatedAt                      DateTime @updatedAt
+
+  patient                        User      @relation("PatientAppointments", fields: [patientId], references: [id], onDelete: Cascade)
+  doctor                         Doctor?   @relation("DoctorAppointments", fields: [doctorId], references: [id], onDelete: SetNull)
+
+  @@index([patientId])
+  @@index([doctorId])
+}
+
+model WalkIn {
+  id          String        @id @default(cuid())
+  firstname   String
+  lastname    String
+  age         String
+  gender      GENDER?
+  contact     String
+  weight      String?
+  height      String?
+  address     String?
+
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model PatientHistory {
+  id                   String             @id @default(cuid())
+  userId               String
+  history              String
+  createdAt            DateTime           @default(now())
+
+  user                 User               @relation("UserPatientHistory", fields: [userId], references: [id])
+
+  @@index([userId])
 }
 
 model Admin {
@@ -53,27 +97,6 @@ model Admin {
     password   String
    
 }
-
-
-model WalkIn {
-  
-    id         String        @id @default(cuid())
-    firstname   String
-    lastname   String
-    age       String
-    gender    GENDER?
-    contact   String
-    weight    String?
-    height    String?
-    address  String?
-
-    createdAt            DateTime         @default(now())
-    updatedAt            DateTime         @updatedAt
-
-   
-}
-
-
 
 enum USEROLE {
   DOCTOR
@@ -87,16 +110,9 @@ enum GENDER {
   OTHER
 }
 
-
-
-model PatientHistory {
-  id                   String             @id @default(cuid())
-  userId               String
-  history              String
-  createdAt            DateTime           @default(now())
-
-  user                 User               @relation("UserPatientHistory", fields: [userId], references: [id])
-
-  @@index([userId])
+enum AppointmentStatus {
+  PENDING
+  APPROVED
+  COMPLETED
+  CANCELED
 }
-

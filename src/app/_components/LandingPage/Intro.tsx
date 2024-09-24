@@ -17,8 +17,8 @@ const Intro = () => {
         </Label>
         <Label className="w-[350px] font-light leading-6 tracking-wider text-[#0c0b0b]">
           Forget about storage filing to keep patient records. Use{" "}
-          <span className="font-bold text-[#DA1B2E]">zilmar</span> the
-          efficient medical clinic management system at your fingertips.
+          <span className="font-bold text-[#DA1B2E]">zilmar</span> the efficient
+          medical clinic management system at your fingertips.
         </Label>
         <div className="mt-5 flex items-center gap-4">
           <div className="flex w-fit items-center justify-start gap-2 rounded-sm bg-black px-5 py-1 text-white">
@@ -39,7 +39,7 @@ const Intro = () => {
           </div>
         </div>
       </div>
-      <div>
+      <div className="">
         <img className="max-w-min" src="hero.png" width={500} />
       </div>
     </div>
