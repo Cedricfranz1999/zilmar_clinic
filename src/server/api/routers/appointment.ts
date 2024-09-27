@@ -1,7 +1,8 @@
 import { Weight } from "lucide-react";
 import { number, z } from "zod";
 import { GenderEnum } from "~/app/patient/formSchema";
-import { AppointmentStatus } from "@prisma/client";
+import { AppointmentStatus } from "@prisma/client"; 
+
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
@@ -12,6 +13,18 @@ export const appointment_router = createTRPCRouter({
       where: {
         patientId: userId,
       },
+      include: {
+        doctor: true,
+        patient: true,
+      },
+    });
+  }),
+
+
+    getAllAppointmentByAdmin: publicProcedure.query(async ({ ctx, input }) => {
+    const userId = ctx.auth.userId;
+    return ctx.db.appointment.findMany({
+
       include: {
         doctor: true,
         patient: true,
@@ -65,4 +78,24 @@ export const appointment_router = createTRPCRouter({
         },
       });
     }),
+
+     EditAppointmentStatus: publicProcedure
+    .input(
+      z.object({
+        appointmentId: z.string(),
+        status: z.nativeEnum(AppointmentStatus), 
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db.appointment.update({
+        where: {
+          id: input.appointmentId,
+        },
+        data: {
+          status: input.status,
+        },
+      });
+    }),
 });
+
+
