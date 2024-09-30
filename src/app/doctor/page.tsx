@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -62,12 +62,13 @@ const Page = () => {
   const [addDialogOpen, setAddDialogOpen] = useState<boolean>(false);
   const [editDialogOpen, setEditDialogOpen] = useState<boolean>(false);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
+  const [localStorageData, setLocalStorageData] = useState<any>();
+
+
   let { data: appointment, refetch } =
-    api.appointment.getAllAppointment.useQuery();
+    api.appointment.getAllAppointmentByDoctorId.useQuery({doctorId:localStorageData as string});
   const { data: activeDoctor } = api.doctor.getActiveDoctor.useQuery();
   const { data: patientLogin } = api.patient.getPatientLogin.useQuery({});
-
-  console.log("12345", patientLogin);
 
   const updateDoctors = api.appointment.AddAppointment.useMutation({
     onSuccess: () => {
@@ -145,6 +146,15 @@ const Page = () => {
       await deleteAppointment.mutateAsync({ id: appointmentId as string });
     }
   };
+
+
+    useEffect(() => {
+    const storedValue = localStorage.getItem('doctorId');
+    if (storedValue) {
+      setLocalStorageData(storedValue);
+    }
+  }, []); 
+
 
   return (
     <div className="container mx-auto py-10">

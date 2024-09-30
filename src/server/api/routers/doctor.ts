@@ -95,8 +95,9 @@ export const doctor_router = createTRPCRouter({
     //   }),
     // )
     .query(async ({ ctx, input }) => {
-      return ctx.db.doctor.findFirst({
+      return ctx.db.doctor.findMany({
         select: {
+          id:true,
           username: true,
           password: true,
         },

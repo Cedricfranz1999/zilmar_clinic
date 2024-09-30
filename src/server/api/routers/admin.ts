@@ -11,6 +11,6 @@ export const admin_router = createTRPCRouter({
     //   }),
     // )
     .query(async ({ ctx, input }) => {
-      return ctx.db.admin.findFirst({});
+      return ctx.db.admin.findMany({});
     }),
 });

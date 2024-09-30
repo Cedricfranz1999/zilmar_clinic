@@ -21,6 +21,24 @@ export const appointment_router = createTRPCRouter({
   }),
 
 
+   getAllAppointmentByDoctorId: publicProcedure.input(
+      z.object({
+        doctorId: z.string().optional(),
+      }),
+    ).query(async ({ ctx, input }) => {
+    return ctx.db.appointment.findMany({
+      where: {
+        doctorId: input.doctorId,
+      },
+      include: {
+        doctor: true,
+        patient: true,
+      },
+    });
+  }),
+
+
+
     getAllAppointmentByAdmin: publicProcedure.query(async ({ ctx, input }) => {
     const userId = ctx.auth.userId;
     return ctx.db.appointment.findMany({

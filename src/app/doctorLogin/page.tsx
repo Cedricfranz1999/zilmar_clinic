@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
@@ -25,14 +25,26 @@ export default function AdminLogin() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Check if credentials match
-    if (username === data?.username && password === data?.password) {
+    // Find the doctor with matching username and password
+    const doctor = data?.find(
+      (doc) => doc.username === username && doc.password === password
+    );
+
+    if (doctor) {
+      localStorage.setItem("doctorId", doctor.id);
       toast.success("Login successful!");
-      router.push("/admin/doctor");
+      router.push("/doctor");
     } else {
       toast.error("Invalid username or password. Please try again.");
     }
   };
+
+   useEffect(() => {
+    const doctorId = localStorage.getItem("doctorId");
+    if (doctorId) {
+      router.push("/doctor");
+    }
+  }, [router]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
