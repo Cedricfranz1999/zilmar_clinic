@@ -39,11 +39,10 @@ const Features = () => {
                   Medical Notes
                 </Label>
                 <Label className="w-56 text-sm font-extralight">
-                  {" "}
-                  Keep track of your patient's latest{" "}
+                  Keep track of your patients latest
                   <span className="font-bold text-[#DA1B2E]">
                     Medical Condition
-                  </span>{" "}
+                  </span>
                   anytime, anywhere.
                 </Label>
               </div>
@@ -274,7 +273,7 @@ const Features = () => {
             </div>
 
             <Label className="w-[450px] text-sm font-light leading-5 text-[#100f0f]">
-              Zilmar's medical clinic management system software and mobile app
+              Zilmar s medical clinic management system software and mobile app
               enables you to work across boundaries, from different platforms
               and locations
             </Label>

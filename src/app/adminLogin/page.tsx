@@ -26,19 +26,19 @@ export default function AdminLogin() {
     e.preventDefault();
 
     const doctor = data?.find(
-      (doc) => doc.username === username && doc.password === password
+      (doc) => doc.username === username && doc.password === password,
     );
 
     if (doctor) {
       localStorage.setItem("adminData", doctor.id);
       toast.success("Login successful!");
-      router.push("/doctor");
+      router.push("/admin/dashboard");
     } else {
       toast.error("Invalid username or password. Please try again.");
     }
   };
 
-   useEffect(() => {
+  useEffect(() => {
     const doctorId = localStorage.getItem("adminData");
     if (doctorId) {
       router.push("/admin/dashboard");
@@ -49,7 +49,7 @@ export default function AdminLogin() {
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
       <Card className="w-[350px]">
         <CardHeader>
-          <CardTitle>Doctor Login</CardTitle>
+          <CardTitle>Admin Login</CardTitle>
           <CardDescription>
             Enter your credentials to access the Doctor portal.
           </CardDescription>

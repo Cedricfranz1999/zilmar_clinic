@@ -62,7 +62,7 @@ const Page = () => {
   const [addDialogOpen, setAddDialogOpen] = useState<boolean>(false);
   const [editDialogOpen, setEditDialogOpen] = useState<boolean>(false);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
-  let { data: appointment, refetch } =
+  const { data: appointment, refetch } =
     api.appointment.getAllAppointment.useQuery();
   const { data: activeDoctor } = api.doctor.getActiveDoctor.useQuery();
   const { data: patientLogin } = api.patient.getPatientLogin.useQuery({});
@@ -70,8 +70,8 @@ const Page = () => {
   console.log("12345", patientLogin);
 
   const updateDoctors = api.appointment.AddAppointment.useMutation({
-    onSuccess: () => {
-      refetch();
+    onSuccess: async () => {
+      await refetch();
       toast({
         title: "Success",
         description: "Doctor records updated successfully.",
@@ -81,9 +81,9 @@ const Page = () => {
   });
 
   const deleteAppointment = api.appointment.deleteAppointment.useMutation({
-    onSuccess: () => {
-      refetch();
-      toast({
+    onSuccess: async () => {
+      await refetch();
+      await toast({
         title: "Success",
         description: "delete appointment updated successfully.",
         duration: 1000,
@@ -280,7 +280,7 @@ const Page = () => {
                         >
                           <DialogTrigger asChild>
                             <Button
-                              disabled ={appointment.status !== "PENDING"}
+                              disabled={appointment.status !== "PENDING"}
                               variant="outline"
                               size="sm"
                               className="mr-2"
@@ -400,7 +400,11 @@ const Page = () => {
                         </Dialog>
                         <AlertDialog>
                           <AlertDialogTrigger asChild>
-                            <Button variant="destructive" size="sm" disabled={appointment.status !== "PENDING"}>
+                            <Button
+                              variant="destructive"
+                              size="sm"
+                              disabled={appointment.status !== "PENDING"}
+                            >
                               <Trash2Icon className="mr-2 h-4 w-4" />
                               Delete
                             </Button>

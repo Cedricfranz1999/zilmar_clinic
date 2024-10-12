@@ -28,7 +28,6 @@ import {
 import { useToast } from "~/components/ui/use-toast";
 
 export default function Page() {
-  const router = useRouter();
   const [search, setSearch] = useState<string>("");
   const [patientData, setPatientData] = useState<any>();
   const [weight, setWeight] = useState<string>("");
@@ -40,8 +39,8 @@ export default function Page() {
   });
 
   const updatePatientRecords = api.patient.EditPatient.useMutation({
-    onSuccess: () => {
-      refetch();
+    onSuccess: async () => {
+      await refetch();
       toast({
         title: "Success",
         description: "Patient records updated successfully.",

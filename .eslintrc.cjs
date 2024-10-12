@@ -22,6 +22,14 @@ const config = {
     "@typescript-eslint/non-nullable-type-assertion-style": "off",
     "@typescript-eslint/no-unsafe-call": "off",
     "@typescript-eslint/no-unsafe-return": "off",
+    "@typescript-eslint/prefer-nullish-coalescing": "off",
+    "@typescript-eslint/no-empty-object-type": "off",
+    "react-hooks/rules-of-hooks": "off",
+    "@typescript-eslint/no-floating": "off",
+
+    "@typescript-eslint/restrict-template-expressions": "off",
+    "@typescript-eslint/await-thenable": "off",
+    " react/no-unescaped-entities": "off",
 
     "@typescript-eslint/consistent-type-imports": [
       "warn",

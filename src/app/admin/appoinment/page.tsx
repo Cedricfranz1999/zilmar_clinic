@@ -63,28 +63,27 @@ const Page = () => {
   const [addDialogOpen, setAddDialogOpen] = useState<boolean>(false);
   const [editDialogOpen, setEditDialogOpen] = useState<boolean>(false);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
-  let { data: appointment, refetch } =
+  const { data: appointment, refetch } =
     api.appointment.getAllAppointment.useQuery();
   const { data: activeDoctor } = api.doctor.getActiveDoctor.useQuery();
   const { data: patientLogin } = api.patient.getPatientLogin.useQuery({});
 
   console.log("12345", appointment);
 
-  
-    const updateDoctorstatus = api.appointment.EditAppointmentStatus.useMutation({
-    onSuccess: () => {
+  const updateDoctorstatus = api.appointment.EditAppointmentStatus.useMutation({
+    onSuccess: async () => {
       toast({
         title: "Success",
         description: "Doctor status updated successfully.",
         duration: 1000,
       });
-      refetch();
+      await refetch();
     },
   });
 
   const updateDoctors = api.appointment.AddAppointment.useMutation({
-    onSuccess: () => {
-      refetch();
+    onSuccess: async () => {
+      await refetch();
       toast({
         title: "Success",
         description: "Doctor records updated successfully.",
@@ -92,11 +91,10 @@ const Page = () => {
       });
     },
   });
-  
 
   const deleteAppointment = api.appointment.deleteAppointment.useMutation({
-    onSuccess: () => {
-      refetch();
+    onSuccess: async () => {
+      await refetch();
       toast({
         title: "Success",
         description: "delete appointment updated successfully.",
@@ -104,9 +102,6 @@ const Page = () => {
       });
     },
   });
-
-
-  
 
   const formatDate = (dateString: Date) => {
     const date = new Date(dateString);
@@ -147,7 +142,10 @@ const Page = () => {
       doctorId: form.doctor.value,
     };
 
-    const updateAppointmentStatus = async (appointmentId: string, newStatus: AppointmentStatus) => {
+    const updateAppointmentStatus = async (
+      appointmentId: string,
+      newStatus: AppointmentStatus,
+    ) => {
       await updateDoctorstatus.mutateAsync({
         appointmentId: appointmentId,
         status: newStatus,
@@ -170,13 +168,15 @@ const Page = () => {
     }
   };
 
-  const updateAppointmentStatus = async (appointmentId: string, newStatus: AppointmentStatus) => {
+  const updateAppointmentStatus = async (
+    appointmentId: string,
+    newStatus: AppointmentStatus,
+  ) => {
     await updateDoctorstatus.mutateAsync({
       appointmentId: appointmentId,
       status: newStatus,
     });
   };
-
 
   return (
     <div className="container mx-auto py-10">
@@ -189,7 +189,7 @@ const Page = () => {
           </Badge>
           <Dialog open={addDialogOpen} onOpenChange={setAddDialogOpen}>
             <DialogTrigger asChild>
-           <></>
+              <></>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
               <form onSubmit={handleAddAppointment}>
@@ -278,7 +278,6 @@ const Page = () => {
                   <TableHead>Email</TableHead>
                   <TableHead>Contact</TableHead>
 
-
                   <TableHead className="text-right">Action</TableHead>
                 </TableRow>
               </TableHeader>
@@ -292,7 +291,7 @@ const Page = () => {
                       <TableCell>
                         {appointment?.patient?.firstname}{" "}
                         {appointment?.patient?.lastname}
-                      </TableCell>     
+                      </TableCell>
                       <TableCell className="font-medium">
                         {formattedDate}
                       </TableCell>
@@ -307,13 +306,11 @@ const Page = () => {
                       <TableCell>
                         <Badge variant="outline">{appointment.status}</Badge>
                       </TableCell>
-                        <TableCell>
-                        {appointment?.patient?.email}{" "}
-                      </TableCell> 
-                         <TableCell>
+                      <TableCell>{appointment?.patient?.email} </TableCell>
+                      <TableCell>
                         {appointment?.patient?.contactNumber}{" "}
-                      </TableCell> 
-                      <TableCell className="text-right flex flex-col gap-2">
+                      </TableCell>
+                      <TableCell className="flex flex-col gap-2 text-right">
                         <Dialog
                           open={
                             appointment.id === appointmentId
@@ -439,9 +436,14 @@ const Page = () => {
                                 <Button type="submit">Save changes</Button>
                               </DialogFooter>
                             </form>
-                            </DialogContent>
+                          </DialogContent>
                           <Select
-                            onValueChange={(value) => updateAppointmentStatus(appointment.id, value as AppointmentStatus)}
+                            onValueChange={(value) =>
+                              updateAppointmentStatus(
+                                appointment.id,
+                                value as AppointmentStatus,
+                              )
+                            }
                             defaultValue={appointment.status}
                           >
                             <SelectTrigger className="w-[180px]">
@@ -450,11 +452,12 @@ const Page = () => {
                             <SelectContent>
                               <SelectItem value="PENDING">Pending</SelectItem>
                               <SelectItem value="APPROVED">Approved</SelectItem>
-                              <SelectItem value="COMPLETED">Completed</SelectItem>
+                              <SelectItem value="COMPLETED">
+                                Completed
+                              </SelectItem>
                               <SelectItem value="CANCELED">Canceled</SelectItem>
                             </SelectContent>
                           </Select>
-        
                         </Dialog>
                         <AlertDialog>
                           <AlertDialogTrigger asChild>
@@ -485,7 +488,6 @@ const Page = () => {
                             </AlertDialogFooter>
                           </AlertDialogContent>
                         </AlertDialog>
-                          
                       </TableCell>
                     </TableRow>
                   );
@@ -508,7 +510,7 @@ const Page = () => {
           <CardContent>
             <Button onClick={() => setAddDialogOpen(true)}>
               <CalendarIcon className="mr-2 h-4 w-4" />
-         <></>
+              <></>
             </Button>
           </CardContent>
         </CardHeader>

@@ -35,8 +35,8 @@ export default function DoctorRecords() {
   const { toast } = useToast();
 
   const updateDoctors = api.doctor.EditDoctor.useMutation({
-    onSuccess: () => {
-      refetch();
+    onSuccess: async () => {
+      await refetch();
       toast({
         title: "Success",
         description: "Doctor records updated successfully.",
@@ -47,13 +47,13 @@ export default function DoctorRecords() {
   });
 
   const updateDoctorstatus = api.doctor.EditDoctorStatus.useMutation({
-    onSuccess: () => {
+    onSuccess: async () => {
       toast({
         title: "Success",
         description: "Doctor status updated successfully.",
         duration: 1000,
       });
-      refetch();
+      await refetch();
     },
   });
 

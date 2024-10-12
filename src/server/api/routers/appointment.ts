@@ -1,8 +1,7 @@
 import { Weight } from "lucide-react";
 import { number, z } from "zod";
 import { GenderEnum } from "~/app/patient/formSchema";
-import { AppointmentStatus } from "@prisma/client"; 
-
+import { AppointmentStatus } from "@prisma/client";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
@@ -20,29 +19,27 @@ export const appointment_router = createTRPCRouter({
     });
   }),
 
-
-   getAllAppointmentByDoctorId: publicProcedure.input(
+  getAllAppointmentByDoctorId: publicProcedure
+    .input(
       z.object({
         doctorId: z.string().optional(),
       }),
-    ).query(async ({ ctx, input }) => {
-    return ctx.db.appointment.findMany({
-      where: {
-        doctorId: input.doctorId,
-      },
-      include: {
-        doctor: true,
-        patient: true,
-      },
-    });
-  }),
+    )
+    .query(async ({ ctx, input }) => {
+      return ctx.db.appointment.findMany({
+        where: {
+          doctorId: input.doctorId,
+        },
+        include: {
+          doctor: true,
+          patient: true,
+        },
+      });
+    }),
 
-
-
-    getAllAppointmentByAdmin: publicProcedure.query(async ({ ctx, input }) => {
+  getAllAppointmentByAdmin: publicProcedure.query(async ({ ctx, input }) => {
     const userId = ctx.auth.userId;
     return ctx.db.appointment.findMany({
-
       include: {
         doctor: true,
         patient: true,
@@ -97,11 +94,11 @@ export const appointment_router = createTRPCRouter({
       });
     }),
 
-     EditAppointmentStatus: publicProcedure
+  EditAppointmentStatus: publicProcedure
     .input(
       z.object({
         appointmentId: z.string(),
-        status: z.nativeEnum(AppointmentStatus), 
+        status: z.nativeEnum(AppointmentStatus),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -115,5 +112,3 @@ export const appointment_router = createTRPCRouter({
       });
     }),
 });
-
-

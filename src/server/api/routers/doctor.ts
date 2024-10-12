@@ -97,23 +97,31 @@ export const doctor_router = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       return ctx.db.doctor.findMany({
         select: {
-          id:true,
+          id: true,
           username: true,
           password: true,
         },
       });
     }),
 
-  getActiveDoctor: publicProcedure
-    // .input(
-    //   z.object({
-    //     userId: z.string(),
-    //   }),
-    // )
+  getActiveDoctor: publicProcedure.query(async ({ ctx, input }) => {
+    return ctx.db.doctor.findMany({
+      where: {
+        status: true,
+      },
+    });
+  }),
+
+  getDoctorLoginCredential: publicProcedure
+    .input(
+      z.object({
+        doctorId: z.string().optional(),
+      }),
+    )
     .query(async ({ ctx, input }) => {
-      return ctx.db.doctor.findMany({
+      return ctx.db.doctor.findFirst({
         where: {
-          status: true,
+          id: input.doctorId,
         },
       });
     }),

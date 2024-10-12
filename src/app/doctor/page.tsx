@@ -64,15 +64,16 @@ const Page = () => {
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [localStorageData, setLocalStorageData] = useState<any>();
 
-
-  let { data: appointment, refetch } =
-    api.appointment.getAllAppointmentByDoctorId.useQuery({doctorId:localStorageData as string});
+  const { data: appointment, refetch } =
+    api.appointment.getAllAppointmentByDoctorId.useQuery({
+      doctorId: localStorageData as string,
+    });
   const { data: activeDoctor } = api.doctor.getActiveDoctor.useQuery();
   const { data: patientLogin } = api.patient.getPatientLogin.useQuery({});
 
   const updateDoctors = api.appointment.AddAppointment.useMutation({
-    onSuccess: () => {
-      refetch();
+    onSuccess: async () => {
+      await refetch();
       toast({
         title: "Success",
         description: "Doctor records updated successfully.",
@@ -82,8 +83,8 @@ const Page = () => {
   });
 
   const deleteAppointment = api.appointment.deleteAppointment.useMutation({
-    onSuccess: () => {
-      refetch();
+    onSuccess: async () => {
+      await refetch();
       toast({
         title: "Success",
         description: "delete appointment updated successfully.",
@@ -147,14 +148,12 @@ const Page = () => {
     }
   };
 
-
-    useEffect(() => {
-    const storedValue = localStorage.getItem('doctorId');
+  useEffect(() => {
+    const storedValue = localStorage.getItem("doctorId");
     if (storedValue) {
       setLocalStorageData(storedValue);
     }
-  }, []); 
-
+  }, []);
 
   return (
     <div className="container mx-auto py-10">
@@ -252,8 +251,8 @@ const Page = () => {
                 <TableRow>
                   <TableHead>Date</TableHead>
                   <TableHead>Time</TableHead>
+                  <TableHead>Patient Name</TableHead>
                   <TableHead>Appointment Description</TableHead>
-                  <TableHead>Doctor Name</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead className="text-right">Action</TableHead>
                 </TableRow>
@@ -270,12 +269,13 @@ const Page = () => {
                       </TableCell>
                       <TableCell>{formattedTime}</TableCell>
                       <TableCell>
-                        {appointment.appointmentDescription}
+                        {appointment?.patient?.firstname}{" "}
+                        {appointment?.patient?.lastname}
                       </TableCell>
                       <TableCell>
-                        {appointment?.doctor?.firstname}{" "}
-                        {appointment?.doctor?.lastname}
+                        {appointment.appointmentDescription}
                       </TableCell>
+
                       <TableCell>
                         <Badge variant="outline">{appointment.status}</Badge>
                       </TableCell>
@@ -290,7 +290,7 @@ const Page = () => {
                         >
                           <DialogTrigger asChild>
                             <Button
-                              disabled ={appointment.status !== "PENDING"}
+                              disabled={appointment.status !== "PENDING"}
                               variant="outline"
                               size="sm"
                               className="mr-2"
@@ -410,7 +410,11 @@ const Page = () => {
                         </Dialog>
                         <AlertDialog>
                           <AlertDialogTrigger asChild>
-                            <Button variant="destructive" size="sm" disabled={appointment.status !== "PENDING"}>
+                            <Button
+                              variant="destructive"
+                              size="sm"
+                              disabled={appointment.status !== "PENDING"}
+                            >
                               <Trash2Icon className="mr-2 h-4 w-4" />
                               Delete
                             </Button>

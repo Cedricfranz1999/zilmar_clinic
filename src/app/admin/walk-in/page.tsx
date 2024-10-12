@@ -35,9 +35,9 @@ export default function DoctorRecords() {
   const { toast } = useToast();
 
   const updateDoctors = api.walkin.EditWalkin.useMutation({
-    onSuccess: () => {
-      refetch();
-      toast({
+    onSuccess: async () => {
+      await refetch();
+      await toast({
         title: "Success",
         description: "Doctor records updated successfully.",
         duration: 1000,
@@ -84,7 +84,7 @@ export default function DoctorRecords() {
           onChange={(e) => setSearch(e.target.value)}
         />
         <Button className="bg-black" onClick={handleAddDoctors}>
-          Add Doctor
+          Add Wak-in
         </Button>
       </div>
       <Table>

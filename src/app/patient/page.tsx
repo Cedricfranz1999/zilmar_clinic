@@ -62,16 +62,14 @@ const Page = () => {
   const [addDialogOpen, setAddDialogOpen] = useState<boolean>(false);
   const [editDialogOpen, setEditDialogOpen] = useState<boolean>(false);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
-  let { data: appointment, refetch } =
+  const { data: appointment, refetch } =
     api.appointment.getAllAppointment.useQuery();
   const { data: activeDoctor } = api.doctor.getActiveDoctor.useQuery();
   const { data: patientLogin } = api.patient.getPatientLogin.useQuery({});
 
-  console.log("12345", patientLogin);
-
   const updateDoctors = api.appointment.AddAppointment.useMutation({
-    onSuccess: () => {
-      refetch();
+    onSuccess: async () => {
+      await refetch();
       toast({
         title: "Success",
         description: "Doctor records updated successfully.",
@@ -81,8 +79,8 @@ const Page = () => {
   });
 
   const deleteAppointment = api.appointment.deleteAppointment.useMutation({
-    onSuccess: () => {
-      refetch();
+    onSuccess: async () => {
+      await refetch();
       toast({
         title: "Success",
         description: "delete appointment updated successfully.",
@@ -99,22 +97,42 @@ const Page = () => {
     };
   };
 
-  console.log("appointment id ", appointmentId);
-
-  const handleAddAppointment = async (event: any) => {
+  const handleAddAppointment = async (
+    event: React.FormEvent<HTMLFormElement>,
+  ) => {
     event.preventDefault();
-    const form = event.target;
+    const form = event.currentTarget;
 
+    const selectedDate = new Date(`${form.date.value}T${form.time.value}`);
     const newAppointment = {
-      date: new Date(`${form.date.value}T${form.time.value}`),
+      date: selectedDate,
       patientId: patientLogin?.id as string,
       description: form.description.value,
       doctorId: form.doctor.value,
     };
 
-    if (appointment) {
-      await updateDoctors.mutateAsync(newAppointment);
+    const dateStart = new Date(selectedDate.setHours(0, 0, 0, 0));
+    const dateEnd = new Date(selectedDate.setHours(23, 59, 59, 999));
+
+    const appointmentsOnDate =
+      appointment?.filter((appointment) => {
+        const appointmentDate = new Date(appointment.appointmentTime);
+        return (
+          appointment.doctorId === newAppointment.doctorId &&
+          appointmentDate >= dateStart &&
+          appointmentDate <= dateEnd
+        );
+      }) || [];
+
+    if (appointmentsOnDate.length >= 10) {
+      toast({
+        description: "appointment for selected date is fully booked",
+        variant: "destructive",
+      });
+      return;
     }
+
+    await updateDoctors.mutateAsync(newAppointment);
     setAddDialogOpen(false);
   };
 
@@ -280,7 +298,7 @@ const Page = () => {
                         >
                           <DialogTrigger asChild>
                             <Button
-                              disabled ={appointment.status !== "PENDING"}
+                              disabled={appointment.status !== "PENDING"}
                               variant="outline"
                               size="sm"
                               className="mr-2"
@@ -400,7 +418,11 @@ const Page = () => {
                         </Dialog>
                         <AlertDialog>
                           <AlertDialogTrigger asChild>
-                            <Button variant="destructive" size="sm" disabled={appointment.status !== "PENDING"}>
+                            <Button
+                              variant="destructive"
+                              size="sm"
+                              disabled={appointment.status !== "PENDING"}
+                            >
                               <Trash2Icon className="mr-2 h-4 w-4" />
                               Delete
                             </Button>
