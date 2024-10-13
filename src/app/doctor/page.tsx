@@ -237,7 +237,9 @@ const Page = () => {
                   </div>
                 </div>
                 <DialogFooter>
-                  <Button type="submit">Save Appointment</Button>
+                  <Button type="submit" disabled={updateDoctors.isPending}>
+                    Save Appointment
+                  </Button>
                 </DialogFooter>
               </form>
             </DialogContent>
