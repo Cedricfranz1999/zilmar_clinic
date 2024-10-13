@@ -16,6 +16,9 @@ export const appointment_router = createTRPCRouter({
         doctor: true,
         patient: true,
       },
+      orderBy: {
+        appointmentTime: "desc",
+      },
     });
   }),
 
@@ -33,6 +36,9 @@ export const appointment_router = createTRPCRouter({
         include: {
           doctor: true,
           patient: true,
+        },
+        orderBy: {
+          appointmentTime: "desc",
         },
       });
     }),
