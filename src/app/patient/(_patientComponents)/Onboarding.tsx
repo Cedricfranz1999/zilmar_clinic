@@ -139,10 +139,7 @@ const OnBoarding = () => {
                   <FormControl>
                     <div className="flex flex-col items-start gap-2">
                       <Label className="text-white">Contact No.</Label>
-                      <Input
-                        {...field}
-                        placeholder=" ( optional only )"
-                      ></Input>
+                      <Input {...field}></Input>
                     </div>
                   </FormControl>
                   <FormMessage />

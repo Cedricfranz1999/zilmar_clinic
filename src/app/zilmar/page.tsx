@@ -208,18 +208,19 @@ export default function LandingPage() {
                 icon: "pic1.svg",
                 title: "Patient Information",
                 description:
-                  "Access and update your patient records in Different and Multiple Clinics",
+                  "Access and update your patient records in Different portal",
               },
               {
                 icon: "pic2.svg",
-                title: "Medical Notes",
+                title: "Doctor Records",
                 description:
-                  "Keep track of your patients latest Medical Condition anytime, anywhere.",
+                  "Keep track of your doctors records and and their patients  .",
               },
               {
                 icon: "pic3.svg",
-                title: "Patient Images",
-                description: "Attach multiple images for each patient.",
+                title: "Schedule",
+                description:
+                  "Set different Dates and time for schedule of patients",
               },
               {
                 icon: "pic4.svg",
@@ -228,15 +229,15 @@ export default function LandingPage() {
               },
               {
                 icon: "pic5.svg",
-                title: "Payments",
-                description:
-                  "Keep track of your patient Cash and Installments payments.",
+                title: "Walk-ins",
+                description: "Keep track of walk-in records",
               },
+
               {
-                icon: "pic 6.svg",
-                title: "Reports",
+                icon: "pic5.svg",
+                title: "Authentication",
                 description:
-                  "Generate Income and Expenses and report in an instant.",
+                  "Secure patients registration with a authentication",
               },
             ].map((feature, index) => (
               <div key={index} className="flex items-start justify-start gap-4">
