@@ -85,7 +85,7 @@ export default function Page() {
         <TableBody>
           {data?.map((data) => (
             <TableRow key={data.id}>
-              <TableCell>{data.id}</TableCell>
+              <TableCell>{`000${data.patientNo}`}</TableCell>
               <TableCell>{data.firstname}</TableCell>
               <TableCell>{data.lastname}</TableCell>
               <TableCell>{data.gender}</TableCell>

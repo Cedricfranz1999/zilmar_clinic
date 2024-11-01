@@ -53,7 +53,7 @@ export const patient_router = createTRPCRouter({
           ],
         },
         orderBy: {
-          createdAt: "asc",
+          patientNo: "asc",
         },
       });
     }),
