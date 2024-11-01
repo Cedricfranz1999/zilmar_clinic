@@ -71,6 +71,7 @@ export default function Page() {
       <Table>
         <TableHeader>
           <TableRow>
+            <TableHead>Patient ID</TableHead>
             <TableHead>Firstname</TableHead>
             <TableHead>Lastname</TableHead>
             <TableHead>Gender</TableHead>
@@ -84,6 +85,7 @@ export default function Page() {
         <TableBody>
           {data?.map((data) => (
             <TableRow key={data.id}>
+              <TableCell>{data.id}</TableCell>
               <TableCell>{data.firstname}</TableCell>
               <TableCell>{data.lastname}</TableCell>
               <TableCell>{data.gender}</TableCell>

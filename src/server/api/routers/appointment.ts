@@ -6,21 +6,27 @@ import { AppointmentStatus } from "@prisma/client";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
 export const appointment_router = createTRPCRouter({
-  getAllAppointment: publicProcedure.query(async ({ ctx, input }) => {
-    const userId = ctx.auth.userId;
-    return ctx.db.appointment.findMany({
-      where: {
-        patientId: userId,
-      },
-      include: {
-        doctor: true,
-        patient: true,
-      },
-      orderBy: {
-        appointmentTime: "desc",
-      },
-    });
-  }),
+  getAllAppointment: publicProcedure
+    .input(
+      z.object({
+        isAdmin: z.boolean().optional(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const userId = ctx.auth.userId;
+      return ctx.db.appointment.findMany({
+        where: {
+          patientId: input.isAdmin ? undefined : userId,
+        },
+        include: {
+          doctor: true,
+          patient: true,
+        },
+        orderBy: {
+          appointmentTime: "desc",
+        },
+      });
+    }),
 
   getAllAppointmentByDoctorId: publicProcedure
     .input(

@@ -64,7 +64,7 @@ const Page = () => {
   const [editDialogOpen, setEditDialogOpen] = useState<boolean>(false);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const { data: appointment, refetch } =
-    api.appointment.getAllAppointment.useQuery();
+    api.appointment.getAllAppointment.useQuery({ isAdmin: true });
   const { data: activeDoctor } = api.doctor.getActiveDoctor.useQuery();
   const { data: patientLogin } = api.patient.getPatientLogin.useQuery({});
 
@@ -188,9 +188,9 @@ const Page = () => {
             Appointment List
           </Badge>
           <Dialog open={addDialogOpen} onOpenChange={setAddDialogOpen}>
-            <DialogTrigger asChild>
-              <></>
-            </DialogTrigger>
+            {/* <DialogTrigger asChild>
+              <Button>Add Apointment</Button>
+            </DialogTrigger> */}
             <DialogContent className="sm:max-w-[425px]">
               <form onSubmit={handleAddAppointment}>
                 <DialogHeader>
