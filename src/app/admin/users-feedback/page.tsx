@@ -33,7 +33,7 @@ export default function FeedbackTable() {
             <TableHead>First Name</TableHead>
             <TableHead>Last Name</TableHead>
             <TableHead>Feedback</TableHead>
-            <TableHead>Rating</TableHead>
+            <TableHead>Ratings</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
