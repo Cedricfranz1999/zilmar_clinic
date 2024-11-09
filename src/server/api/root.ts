@@ -5,6 +5,7 @@ import { admin_router } from "./routers/admin";
 import { doctor_router } from "./routers/doctor";
 import { walkin_router } from "./routers/walk-in";
 import { appointment_router } from "./routers/appointment";
+import { feedback_router } from "./routers/feedback";
 
 /**
  * This is the primary router for your server.
@@ -18,6 +19,7 @@ export const appRouter = createTRPCRouter({
   doctor: doctor_router,
   walkin: walkin_router,
   appointment: appointment_router,
+  feedback: feedback_router,
 });
 
 // export type definition of API

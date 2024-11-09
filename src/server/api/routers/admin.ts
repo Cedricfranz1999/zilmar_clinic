@@ -7,27 +7,70 @@ export const admin_router = createTRPCRouter({
     return ctx.db.admin.findMany({});
   }),
 
-  getDashboardData: publicProcedure.query(async ({ ctx }) => {
-    const todayStart = startOfDay(new Date());
-    const todayEnd = endOfDay(new Date());
+  getDashboardData: publicProcedure
+    .input(
+      z.object({
+        date: z
+          .object({
+            from: z.date().optional(),
+            to: z.date().optional(),
+          })
+          .optional(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const todayStart = startOfDay(new Date());
+      const todayEnd = endOfDay(new Date());
 
-    const totalDoctor = ctx.db.doctor.count();
-    const totalPatient = ctx.db.user.count();
-    const totalWalkin = ctx.db.walkIn.count();
-    const totalAppointmentForToday = ctx.db.appointment.count({
-      where: {
-        appointmentTime: {
-          gte: todayStart,
-          lte: todayEnd,
+      const { from, to } = input?.date || {};
+      const startDate = from ? startOfDay(from) : todayStart;
+      const endDate = to ? endOfDay(to) : todayEnd;
+
+      const totalDoctor = await ctx.db.doctor.count();
+      const totalPatient = await ctx.db.user.count();
+
+      const totalWalkin = await ctx.db.walkIn.count({
+        where: {
+          createdAt: input.date
+            ? {
+                gte: startDate,
+                lte: endDate,
+              }
+            : undefined,
         },
-      },
-    });
+      });
 
-    return {
-      totalDoctor: await totalDoctor,
-      totalPatient: await totalPatient,
-      totalWalkin: await totalWalkin,
-      totalAppointmentForToday: await totalAppointmentForToday,
-    };
-  }),
+      const totalAppointmentForRange = await ctx.db.appointment.count({
+        where: {
+          createdAt: input.date
+            ? {
+                gte: startDate,
+                lte: endDate,
+              }
+            : undefined,
+        },
+      });
+
+      const totalAppointmentForRangeChart = await ctx.db.appointment.findMany({
+        where: {
+          createdAt: input.date
+            ? {
+                gte: startDate,
+                lte: endDate,
+              }
+            : undefined,
+        },
+        select: {
+          createdAt: true,
+        },
+      });
+
+      return {
+        totalDoctor,
+        totalPatient,
+        totalWalkin,
+        totalAppointmentForRange,
+        totalAppointmentForRangeChart,
+      };
+    }),
 });

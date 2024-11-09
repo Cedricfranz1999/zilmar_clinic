@@ -65,25 +65,28 @@ const Header = () => {
           </nav>
         </SheetContent>
       </Sheet>
-      <div className="mb-2 flex flex-col">
-        <SignedIn>
-          <div>
-            <div className="flex w-full flex-shrink-0 items-center justify-between gap-2 p-2">
-              <div className="ml-2 flex items-center justify-center space-x-2">
-                <div>
-                  <UserButton afterSignOutUrl="/sign-in" />
-                </div>
-                <div className="flex flex-col items-start justify-start">
-                  <Label className="text-center text-neutral-400">
-                    {user?.firstName} <br /> {user?.lastName}
-                  </Label>
+      <div className="flex w-full justify-end">
+        <div className="mb-2 flex flex-col">
+          <SignedIn>
+            <div>
+              <div className="flex w-full flex-shrink-0 items-center justify-between gap-2 p-2">
+                <div className="ml-2 flex items-center justify-center space-x-2">
+                  <div>
+                    <UserButton afterSignOutUrl="/sign-in" />
+                  </div>
+                  <div className="flex flex-col items-start justify-start">
+                    <Label className="text-center text-neutral-400">
+                      {user?.firstName} <br /> {user?.lastName}
+                    </Label>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </SignedIn>
-        <div className="px-4"></div>
+          </SignedIn>
+          <div className="px-4"></div>
+        </div>
       </div>
+      <div></div>
     </header>
   );
 };

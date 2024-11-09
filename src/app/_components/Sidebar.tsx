@@ -9,6 +9,7 @@ import {
   LayoutDashboard,
   LineChart,
   Menu,
+  MessageCircle,
   Package,
   Package2,
   Search,
@@ -41,14 +42,13 @@ import { Input } from "~/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "~/components/ui/sheet";
 
 import React from "react";
-import { useRouter, usePathname } from "next/navigation"; // Import usePathname
+import { useRouter, usePathname } from "next/navigation";
 import { Label } from "~/components/ui/label";
 
 const Sidebar = () => {
   const router = useRouter();
-  const pathname = usePathname(); // Get the current pathname
+  const pathname = usePathname();
 
-  // Function to check if the route is active
   const isActive = (path: string) => pathname.startsWith(path);
 
   return (
@@ -116,6 +116,17 @@ const Sidebar = () => {
             >
               <Footprints className="h-4 w-4" />
               Walk-in
+            </Link>
+            <Link
+              href="/admin/users-feedback"
+              className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary ${
+                isActive("/admin/users-feedback")
+                  ? "bg-teal-700 text-white"
+                  : "text-muted-foreground"
+              }`}
+            >
+              <MessageCircle className="h-4 w-4" />
+              Users Feedback
             </Link>
           </nav>
         </div>

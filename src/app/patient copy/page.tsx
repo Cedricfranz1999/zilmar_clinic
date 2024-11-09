@@ -244,7 +244,7 @@ const Page = () => {
                 <TableRow>
                   <TableHead>Date</TableHead>
                   <TableHead>Time</TableHead>
-                  <TableHead>Appointment Description</TableHead>
+                  <TableHead>Illness</TableHead>
                   <TableHead>Doctor Name</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead className="text-right">Action</TableHead>

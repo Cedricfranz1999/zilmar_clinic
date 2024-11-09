@@ -274,7 +274,7 @@ const Page = () => {
                   <TableHead>Fullname</TableHead>
                   <TableHead>Date</TableHead>
                   <TableHead>Time</TableHead>
-                  <TableHead>Appointment Description</TableHead>
+                  <TableHead>Illness</TableHead>
                   <TableHead>Doctor Name</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead>Email</TableHead>
