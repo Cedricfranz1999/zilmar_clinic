@@ -20,7 +20,15 @@ import {
 } from "~/components/ui/table";
 import { Button } from "~/components/ui/button";
 import { Badge } from "~/components/ui/badge";
-import { format, addDays, isWithinInterval, parse, startOfDay } from "date-fns";
+import {
+  format,
+  addDays,
+  isWithinInterval,
+  parse,
+  startOfDay,
+  isAfter,
+  isBefore,
+} from "date-fns";
 import {
   Dialog,
   DialogContent,
@@ -71,8 +79,16 @@ const Page = () => {
       await refetch();
       toast({
         title: "Success",
-        description: "Doctor records updated successfully.",
+        description: "Appointment added successfully.",
         duration: 1000,
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to add appointment.",
+        variant: "destructive",
+        duration: 3000,
       });
     },
   });
@@ -88,7 +104,7 @@ const Page = () => {
     },
   });
 
-  const formatDate = (dateString: Date) => {
+  const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return {
       formattedDate: format(date, "MMMM d, yyyy"),
@@ -107,7 +123,11 @@ const Page = () => {
   const isValidAppointmentDate = (date: Date) => {
     const currentDate = startOfDay(new Date());
     const maxDate = addDays(currentDate, 30);
-    return isWithinInterval(date, { start: currentDate, end: maxDate });
+    return (
+      (isAfter(date, currentDate) ||
+        date.getTime() === currentDate.getTime()) &&
+      (isBefore(date, maxDate) || date.getTime() === maxDate.getTime())
+    );
   };
 
   const handleAddAppointment = async (
@@ -143,8 +163,10 @@ const Page = () => {
       doctorId: form.doctor.value,
     };
 
-    const dateStart = new Date(selectedDate.setHours(0, 0, 0, 0));
-    const dateEnd = new Date(selectedDate.setHours(23, 59, 59, 999));
+    const dateStart = new Date(selectedDate);
+    dateStart.setHours(0, 0, 0, 0);
+    const dateEnd = new Date(selectedDate);
+    dateEnd.setHours(23, 59, 59, 999);
 
     const appointmentsOnDate =
       appointment?.filter((appointment) => {
@@ -321,7 +343,7 @@ const Page = () => {
               <TableBody>
                 {appointment?.map((appointment) => {
                   const { formattedDate, formattedTime } = formatDate(
-                    appointment.appointmentTime,
+                    appointment.appointmentTime as any,
                   );
                   return (
                     <TableRow key={appointment?.id}>
