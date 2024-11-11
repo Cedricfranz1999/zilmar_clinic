@@ -39,7 +39,7 @@ export default function DoctorRecords() {
       await refetch();
       await toast({
         title: "Success",
-        description: "Doctor records updated successfully.",
+        description: "Walk-in records updated successfully.",
         duration: 1000,
       });
       setWalkinData(null);
@@ -80,7 +80,7 @@ export default function DoctorRecords() {
       <div className="flex w-full items-start justify-between">
         <Input
           className="w-1/3"
-          placeholder="Search doctors"
+          placeholder="Search  walkin"
           onChange={(e) => setSearch(e.target.value)}
         />
         <Button className="bg-black" onClick={handleAddDoctors}>
@@ -135,12 +135,12 @@ export default function DoctorRecords() {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              {walkinData ? "Edit Doctor Information" : "Add New Doctor"}
+              {walkinData ? "Edit Walk-in Information" : "Add New Walk-in"}
             </AlertDialogTitle>
             <AlertDialogDescription>
               {walkinData
-                ? "Make changes to the doctor's information here. Click save when you're done."
-                : "Enter the details for the new doctor. Click save when you're done."}
+                ? "Make changes to the walk-in's information here. Click save when you're done."
+                : "Enter the details for the new walk-in. Click save when you're done."}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <div className="grid gap-4 py-4">
@@ -250,7 +250,7 @@ export default function DoctorRecords() {
           <AlertDialogFooter className="flex items-center justify-center">
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction onClick={handleSubmit}>
-              {walkinData ? "Save Changes" : "Add Doctor"}
+              {walkinData ? "Save Changes" : "Add Walkin"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

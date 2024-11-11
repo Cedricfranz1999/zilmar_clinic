@@ -20,7 +20,7 @@ import {
 } from "~/components/ui/table";
 import { Button } from "~/components/ui/button";
 import { Badge } from "~/components/ui/badge";
-import { format } from "date-fns";
+import { format, addDays, isWithinInterval, parse, startOfDay } from "date-fns";
 import {
   Dialog,
   DialogContent,
@@ -54,7 +54,6 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 import { useToast } from "~/components/ui/use-toast";
-import { faL } from "@fortawesome/free-solid-svg-icons";
 
 const Page = () => {
   const { toast } = useToast();
@@ -83,7 +82,7 @@ const Page = () => {
       await refetch();
       toast({
         title: "Success",
-        description: "delete appointment updated successfully.",
+        description: "Delete appointment updated successfully.",
         duration: 1000,
       });
     },
@@ -97,13 +96,46 @@ const Page = () => {
     };
   };
 
+  const isValidAppointmentTime = (date: Date, time: string) => {
+    const appointmentDateTime = parse(time, "HH:mm", date);
+    return isWithinInterval(appointmentDateTime, {
+      start: parse("07:00", "HH:mm", date),
+      end: parse("16:00", "HH:mm", date),
+    });
+  };
+
+  const isValidAppointmentDate = (date: Date) => {
+    const currentDate = startOfDay(new Date());
+    const maxDate = addDays(currentDate, 30);
+    return isWithinInterval(date, { start: currentDate, end: maxDate });
+  };
+
   const handleAddAppointment = async (
     event: React.FormEvent<HTMLFormElement>,
   ) => {
     event.preventDefault();
     const form = event.currentTarget;
-
     const selectedDate = new Date(`${form.date.value}T${form.time.value}`);
+
+    if (!isValidAppointmentTime(selectedDate, form.time.value)) {
+      toast({
+        title: "Invalid Time",
+        description: "Appointments are only available from 7 AM to 4 PM.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!isValidAppointmentDate(selectedDate)) {
+      toast({
+        title: "Invalid Date",
+        description:
+          "Appointments can only be scheduled up to 30 days in advance.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     const newAppointment = {
       date: selectedDate,
       patientId: patientLogin?.id as string,
@@ -126,7 +158,7 @@ const Page = () => {
 
     if (appointmentsOnDate.length >= 10) {
       toast({
-        description: "appointment for selected date is fully booked",
+        description: "Appointments for selected date are fully booked",
         variant: "destructive",
       });
       return;
@@ -136,26 +168,44 @@ const Page = () => {
     setAddDialogOpen(false);
   };
 
-  const handleEditAppointment = async (event: any) => {
+  const handleEditAppointment = async (
+    event: React.FormEvent<HTMLFormElement>,
+  ) => {
     event.preventDefault();
-    const form = event.target;
+    const form = event.currentTarget as HTMLFormElement;
+    const selectedDate = new Date(`${form.date.value}T${form.time.value}`);
+
+    if (!isValidAppointmentTime(selectedDate, form.time.value)) {
+      toast({
+        title: "Invalid Time",
+        description: "Appointments are only available from 7 AM to 4 PM.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!isValidAppointmentDate(selectedDate)) {
+      toast({
+        title: "Invalid Date",
+        description:
+          "Appointments can only be scheduled up to 30 days in advance.",
+        variant: "destructive",
+      });
+      return;
+    }
 
     const newAppointment = {
       id: appointmentId,
-      date: new Date(`${form.date.value}T${form.time.value}`),
+      date: selectedDate,
       patientId: patientLogin?.id as string,
       description: form.description.value,
       doctorId: form.doctor.value,
     };
 
-    console.log("Editing Appointment:", newAppointment);
-    // Add your API call here to update the appointment
-
-    setEditDialogOpen(false); // Close dialog after saving
     if (appointment) {
       await updateDoctors.mutateAsync(newAppointment);
     }
-    setAddDialogOpen(false);
+    setEditDialogOpen(false);
   };
 
   const handleDelete = async () => {
@@ -215,7 +265,7 @@ const Page = () => {
                   </div>
                   <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="description" className="text-right">
-                      Description
+                      Illness
                     </Label>
                     <Input
                       id="description"
