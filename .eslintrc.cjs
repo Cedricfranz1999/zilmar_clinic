@@ -26,7 +26,7 @@ const config = {
     "@typescript-eslint/no-empty-object-type": "off",
     "react-hooks/rules-of-hooks": "off",
     "@typescript-eslint/no-floating": "off",
-
+    "@typescript-eslint/no-floating-promises":"off",
     "@typescript-eslint/restrict-template-expressions": "off",
     "@typescript-eslint/await-thenable": "off",
     " react/no-unescaped-entities": "off",
