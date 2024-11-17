@@ -50,7 +50,7 @@ const OnBoarding = () => {
         <Label className="w-72 text-3xl font-semibold leading-4 text-[#1C88C6]">
           <span className="text-[#D61F42]"> Zilmar</span> clinic
         </Label>
-        <Image alt="image" height={400} width={400} src="/doctorLogo.png" />
+        <Image alt="image" height={400} width={400} src="https://klinika.ph/klinika/images/hero.svg" />
       </Card>
       <Card className="h-[800px] rounded-sm bg-red-400 px-10">
         <CardHeader>
