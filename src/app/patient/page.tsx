@@ -62,6 +62,7 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 import { useToast } from "~/components/ui/use-toast";
+import html2canvas from "html2canvas";
 
 const Page = () => {
   const { toast } = useToast();
@@ -236,6 +237,33 @@ const Page = () => {
     }
   };
 
+const generateAppointmentSlip = (appointment: any) => {
+  const slipContainer = document.createElement("div");
+  slipContainer.style.padding = "20px";
+  slipContainer.style.border = "1px solid #ddd";
+  slipContainer.style.width = "300px";
+  slipContainer.style.backgroundColor = "#fff";
+  slipContainer.innerHTML = `
+    <h2 style="text-align: center; font-weight: 800; margin: 10px 0;">ZILMAR CLINIC</h2>
+    <h2 style=" text-align: center; margin: 20px 0;">Appointment Slip</h2>
+    <p><strong>Appointment ID:</strong> ${appointment.id}</p>
+    <p><strong>Patient Name:</strong> ${appointment.patient.firstname} ${appointment.patient.lastname}</p>
+    <p><strong>Doctor:</strong> ${appointment.doctor.firstname} ${appointment.doctor.lastname} (${appointment.doctor.specialty})</p>
+    <p><strong>Description:</strong> ${appointment.appointmentDescription}</p>
+    <p><strong>Time:</strong> ${new Date(appointment.appointmentTime).toLocaleString()}</p>
+  `;
+  document.body.appendChild(slipContainer);
+
+  html2canvas(slipContainer).then((canvas:any) => {
+    const link = document.createElement("a");
+    link.download = `Appointment_Slip_${appointment.id}.png`;
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+    document.body.removeChild(slipContainer); // Clean up the temporary container
+  });
+};
+
+
   return (
     <div className="container mx-auto py-10">
       <h1 className="mb-8 text-3xl font-bold">Appointment Management</h1>
@@ -337,7 +365,7 @@ const Page = () => {
                   <TableHead>Illness</TableHead>
                   <TableHead>Doctor Name</TableHead>
                   <TableHead>Status</TableHead>
-                  <TableHead className="text-right">Action</TableHead>
+                  <TableHead className="text-start">Action</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -361,7 +389,7 @@ const Page = () => {
                       <TableCell>
                         <Badge variant="outline">{appointment.status}</Badge>
                       </TableCell>
-                      <TableCell className="text-right">
+                      <TableCell className="text-right flex items-center justify-start gap-3">
                         <Dialog
                           open={
                             appointment.id === appointmentId
@@ -523,6 +551,7 @@ const Page = () => {
                             </AlertDialogFooter>
                           </AlertDialogContent>
                         </AlertDialog>
+                        <Button className={` ${appointment.status === "PENDING"?"hidden":""}  bg-[#3b3b3b]`} onClick={ ()=> generateAppointmentSlip(appointment)} >Generate Slip</Button>
                       </TableCell>
                     </TableRow>
                   );
