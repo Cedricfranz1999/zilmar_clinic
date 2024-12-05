@@ -21,7 +21,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "~/components/ui/popover";
-import { LineGraph } from "./components/lineGraph";
+import { BarGraph } from "./components/lineGraph";
+import { LineGraph } from "./components/lineGraph1";
 
 const page = () => {
   const [date, setDate] = React.useState<DateRange | undefined>();
@@ -114,7 +115,7 @@ const page = () => {
         >
           <CardHeader> Total Appointment</CardHeader>
 
-          <CardDescription>a list of all appointments Today</CardDescription>
+          <CardDescription>a list of all appointments</CardDescription>
           <CardContent>
             <Label className="text-3xl">{data?.totalAppointmentForRange}</Label>{" "}
             {/* Updated */}
@@ -142,7 +143,8 @@ const page = () => {
         <p className="py-10 text-xl font-bold">Total Appointment</p>
       )}
 
-      <LineGraph data={data?.totalAppointmentForRangeChart} />
+      <BarGraph data={data?.totalAppointmentForRangeChart} />
+      <LineGraph data={data?.metricsForHighestSick} />
     </div>
   );
 };

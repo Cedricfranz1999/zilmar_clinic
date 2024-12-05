@@ -3,11 +3,11 @@
 import { TrendingUp } from "lucide-react";
 import {
   CartesianGrid,
-  Line,
-  LineChart,
   XAxis,
   YAxis,
   ResponsiveContainer,
+  BarChart,
+  Bar,
 } from "recharts";
 
 import {
@@ -51,12 +51,12 @@ interface DataPoint {
   createdAt: string;
 }
 
-export function LineGraph({ data }: { data?: any }) {
+export function BarGraph({ data }: { data?: any }) {
   if (!data || data.length === 0) {
     return (
       <Card className="w-full">
         <CardHeader>
-          <CardTitle>Line Chart</CardTitle>
+          <CardTitle>Bar Chart</CardTitle>
           <CardDescription>No data available</CardDescription>
         </CardHeader>
         <CardContent>
@@ -90,13 +90,13 @@ export function LineGraph({ data }: { data?: any }) {
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Line Chart</CardTitle>
+        <CardTitle>Bar Chart</CardTitle>
         <CardDescription>January - December 2024</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="h-[300px] w-[90%]">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart
+            <BarChart
               data={formattedData}
               margin={{
                 top: 5,
@@ -115,14 +115,12 @@ export function LineGraph({ data }: { data?: any }) {
               />
               <YAxis tickLine={false} axisLine={false} tickMargin={8} />
               <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-              <Line
-                type="monotone"
+              <Bar
                 dataKey="Appointment"
-                stroke="var(--color-Appointment)"
-                strokeWidth={2}
-                dot={false}
+                fill="var(--color-Appointment)"
+                radius={[4, 4, 0, 0]}
               />
-            </LineChart>
+            </BarChart>
           </ResponsiveContainer>
         </ChartContainer>
       </CardContent>

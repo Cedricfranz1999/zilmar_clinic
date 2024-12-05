@@ -65,12 +65,27 @@ export const admin_router = createTRPCRouter({
         },
       });
 
+      const metricsForHighestSick = await ctx.db.appointment.findMany({
+        where: {
+          createdAt: input.date
+            ? {
+                gte: startDate,
+                lte: endDate,
+              }
+            : undefined,
+        },
+        select: {
+          appointmentDescription: true,
+          createdAt: true,
+        },
+      });
       return {
         totalDoctor,
         totalPatient,
         totalWalkin,
         totalAppointmentForRange,
         totalAppointmentForRangeChart,
+        metricsForHighestSick,
       };
     }),
 });
