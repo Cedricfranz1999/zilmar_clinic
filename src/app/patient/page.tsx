@@ -249,7 +249,7 @@ const Page = () => {
     <p><strong>Appointment ID:</strong> ${appointment.id}</p>
     <p><strong>Patient Name:</strong> ${appointment.patient.firstname} ${appointment.patient.lastname}</p>
     <p><strong>Doctor:</strong> ${appointment.doctor.firstname} ${appointment.doctor.lastname} (${appointment.doctor.specialty})</p>
-    <p><strong>Description:</strong> ${appointment.appointmentDescription}</p>
+    <p><strong>Illness:</strong> ${appointment.appointmentDescription}</p>
     <p><strong>Date - Time:</strong> ${new Date(appointment.appointmentTime).toLocaleString()}</p>
   `;
     document.body.appendChild(slipContainer);
